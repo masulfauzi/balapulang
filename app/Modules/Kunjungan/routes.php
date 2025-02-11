@@ -1,0 +1,15 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+use App\Modules\Kunjungan\Controllers\KunjunganController;
+
+Route::controller(KunjunganController::class)->middleware(['web','auth'])->name('kunjungan.')->group(function(){
+	Route::get('/kunjungan', 'index')->name('index');
+	Route::get('/kunjungan/data', 'data')->name('data.index');
+	Route::get('/kunjungan/create', 'create')->name('create');
+	Route::post('/kunjungan', 'store')->name('store');
+	Route::get('/kunjungan/{kunjungan}', 'show')->name('show');
+	Route::get('/kunjungan/{kunjungan}/edit', 'edit')->name('edit');
+	Route::patch('/kunjungan/{kunjungan}', 'update')->name('update');
+	Route::get('/kunjungan/{kunjungan}/delete', 'destroy')->name('destroy');
+});

@@ -13,12 +13,18 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('status_pinjaman', function (Blueprint $table) {
+        Schema::create('kunjungan', function (Blueprint $table) {
             $table->uuid('id')->primary();
 
             // your columns here
-            $table->string('status_pinjaman');
-            $table->enum('status', [0, 1]);
+            $table->uuid('id_nasabah');
+            $table->foreign('id_nasabah')->references('id')->on('nasabah')->onDelete('restrict')->onUpdate('cascade');
+            $table->uuid('id_user');
+            $table->foreign('id_user')->references('id')->on('users')->onDelete('restrict')->onUpdate('cascade');
+            $table->date('tgl_kunjungan');
+            $table->uuid('id_status_kunjungan');
+            $table->foreign('id_status_kunjungan')->references('id')->on('status_kunjungan')->onDelete('restrict')->onUpdate('cascade');
+            $table->text('hasil_kunjungan');
 
             $table->timestamps();
             $table->softDeletes();
@@ -35,6 +41,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('status_pinjaman');
+        Schema::dropIfExists('kunjungan');
     }
 };

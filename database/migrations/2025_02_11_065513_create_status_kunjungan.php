@@ -13,12 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('status_pinjaman', function (Blueprint $table) {
+        Schema::create('status_kunjungan', function (Blueprint $table) {
             $table->uuid('id')->primary();
 
             // your columns here
-            $table->string('status_pinjaman');
-            $table->enum('status', [0, 1]);
+            $table->string('status_kunjungan');
+            $table->enum('kode_kunjungan', [0, 1]);
 
             $table->timestamps();
             $table->softDeletes();
@@ -35,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('status_pinjaman');
+        Schema::dropIfExists('status_kunjungan');
     }
 };
