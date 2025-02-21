@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Modules\Kunjungan\Controllers;
 
 use App\Helpers\Logger;
@@ -43,11 +44,11 @@ class KunjunganController extends Controller
         // $ref_nasabah          = Nasabah::all()->pluck('cif', 'id');
 
         $data['forms'] = [
-            'id_nasabah'      => ['Nasabah', Form::select("id_nasabah", $ref_nasabah, null, ["class" => "form-control select2"])],
+            'id_nasabah' => ['Nasabah', Form::select("id_nasabah", $ref_nasabah, null, ["class" => "form-control select2"])],
             'hasil_kunjungan' => ['Hasil Kunjungan', Form::textarea("hasil_kunjungan", old("hasil_kunjungan"), ["class" => "form-control rich-editor"])],
-            // 'id_status_kunjungan' => ['Status Kunjungan', Form::select("id_status_kunjungan", $ref_status_kunjungan, null, ["class" => "form-control select2"])],
+            'foto' => ['Foto', Form::file("foto", ["class" => "form-control"])],
             // 'id_user'         => ['User', Form::select("id_user", $ref_nasabah, null, ["class" => "form-control select2"])],
-            'tgl_kunjungan'   => ['Tgl Kunjungan', Form::text("tgl_kunjungan", old("tgl_kunjungan"), ["class" => "form-control datepicker", "required" => "required"])],
+            'tgl_kunjungan' => ['Tgl Kunjungan', Form::text("tgl_kunjungan", old("tgl_kunjungan"), ["class" => "form-control datepicker", "required" => "required"])],
 
         ];
 
@@ -59,21 +60,27 @@ class KunjunganController extends Controller
     {
         $this->validate($request, [
             'hasil_kunjungan' => 'required',
-            'id_nasabah'      => 'required',
-            // 'id_status_kunjungan' => 'required',
+            'id_nasabah' => 'required',
+            'foto' => 'required|mimes:jpg,jpeg,png,PNG,JPG,JPEG|max:10240',
+            // 'foto.*' => 'required|mimes:jpg,jpeg,png,PNG,JPG,JPEG|max:10240',
             // 'id_user'             => 'required',
-            'tgl_kunjungan'   => 'required',
+            'tgl_kunjungan' => 'required',
 
         ]);
 
+        $fileName = time() . '.' . $request->foto->extension();
+
+        $request->foto->move(public_path('uploads/'), $fileName);
+
         $status_kunjungan = StatusKunjungan::where('kode_kunjungan', '0')->first();
 
-        $kunjungan                      = new Kunjungan();
-        $kunjungan->hasil_kunjungan     = $request->input("hasil_kunjungan");
-        $kunjungan->id_nasabah          = $request->input("id_nasabah");
+        $kunjungan = new Kunjungan();
+        $kunjungan->hasil_kunjungan = $request->input("hasil_kunjungan");
+        $kunjungan->id_nasabah = $request->input("id_nasabah");
         $kunjungan->id_status_kunjungan = $status_kunjungan->id;
-        $kunjungan->id_user             = Auth::user()->id;
-        $kunjungan->tgl_kunjungan       = $request->input("tgl_kunjungan");
+        $kunjungan->foto = $fileName;
+        $kunjungan->id_user = Auth::user()->id;
+        $kunjungan->tgl_kunjungan = $request->input("tgl_kunjungan");
 
         $kunjungan->created_by = Auth::id();
         $kunjungan->save();
@@ -92,20 +99,31 @@ class KunjunganController extends Controller
         return view('Kunjungan::kunjungan_detail', array_merge($data, ['title' => $this->title]));
     }
 
+    public function validasi(Request $request, Kunjungan $kunjungan)
+    {
+        $status_kunjungan = StatusKunjungan::where('status_kunjungan', 'Valid')->first();
+
+        $kunjungan->id_status_kunjungan = $status_kunjungan->id;
+        $kunjungan->save();
+
+        return redirect()->back()->with('message_sukses', 'Kunjungan telah divalidasi');
+
+    }
+
     public function edit(Request $request, Kunjungan $kunjungan)
     {
         $data['kunjungan'] = $kunjungan;
 
-        $ref_nasabah          = Nasabah::all()->pluck('cif', 'id');
+        $ref_nasabah = Nasabah::all()->pluck('cif', 'id');
         $ref_status_kunjungan = StatusKunjungan::all()->pluck('created_by', 'id');
-        $ref_nasabah          = Nasabah::all()->pluck('cif', 'id');
+        $ref_nasabah = Nasabah::all()->pluck('cif', 'id');
 
         $data['forms'] = [
-            'hasil_kunjungan'     => ['Hasil Kunjungan', Form::textarea("hasil_kunjungan", $kunjungan->hasil_kunjungan, ["class" => "form-control rich-editor"])],
-            'id_nasabah'          => ['Nasabah', Form::select("id_nasabah", $ref_nasabah, null, ["class" => "form-control select2"])],
+            'hasil_kunjungan' => ['Hasil Kunjungan', Form::textarea("hasil_kunjungan", $kunjungan->hasil_kunjungan, ["class" => "form-control rich-editor"])],
+            'id_nasabah' => ['Nasabah', Form::select("id_nasabah", $ref_nasabah, null, ["class" => "form-control select2"])],
             'id_status_kunjungan' => ['Status Kunjungan', Form::select("id_status_kunjungan", $ref_status_kunjungan, null, ["class" => "form-control select2"])],
-            'id_user'             => ['User', Form::select("id_user", $ref_nasabah, null, ["class" => "form-control select2"])],
-            'tgl_kunjungan'       => ['Tgl Kunjungan', Form::text("tgl_kunjungan", $kunjungan->tgl_kunjungan, ["class" => "form-control datepicker", "required" => "required", "id" => "tgl_kunjungan"])],
+            'id_user' => ['User', Form::select("id_user", $ref_nasabah, null, ["class" => "form-control select2"])],
+            'tgl_kunjungan' => ['Tgl Kunjungan', Form::text("tgl_kunjungan", $kunjungan->tgl_kunjungan, ["class" => "form-control datepicker", "required" => "required", "id" => "tgl_kunjungan"])],
 
         ];
 
@@ -117,20 +135,20 @@ class KunjunganController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'hasil_kunjungan'     => 'required',
-            'id_nasabah'          => 'required',
+            'hasil_kunjungan' => 'required',
+            'id_nasabah' => 'required',
             'id_status_kunjungan' => 'required',
-            'id_user'             => 'required',
-            'tgl_kunjungan'       => 'required',
+            'id_user' => 'required',
+            'tgl_kunjungan' => 'required',
 
         ]);
 
-        $kunjungan                      = Kunjungan::find($id);
-        $kunjungan->hasil_kunjungan     = $request->input("hasil_kunjungan");
-        $kunjungan->id_nasabah          = $request->input("id_nasabah");
+        $kunjungan = Kunjungan::find($id);
+        $kunjungan->hasil_kunjungan = $request->input("hasil_kunjungan");
+        $kunjungan->id_nasabah = $request->input("id_nasabah");
         $kunjungan->id_status_kunjungan = $request->input("id_status_kunjungan");
-        $kunjungan->id_user             = $request->input("id_user");
-        $kunjungan->tgl_kunjungan       = $request->input("tgl_kunjungan");
+        $kunjungan->id_user = $request->input("id_user");
+        $kunjungan->tgl_kunjungan = $request->input("tgl_kunjungan");
 
         $kunjungan->updated_by = Auth::id();
         $kunjungan->save();
@@ -142,7 +160,7 @@ class KunjunganController extends Controller
 
     public function destroy(Request $request, $id)
     {
-        $kunjungan             = Kunjungan::find($id);
+        $kunjungan = Kunjungan::find($id);
         $kunjungan->deleted_by = Auth::id();
         $kunjungan->save();
         $kunjungan->delete();
@@ -151,5 +169,4 @@ class KunjunganController extends Controller
         $this->log($request, $text, ['kunjungan.id' => $kunjungan->id]);
         return back()->with('message_success', 'Kunjungan berhasil dihapus!');
     }
-
 }

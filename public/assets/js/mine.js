@@ -1,4 +1,4 @@
-function deleteConfirm(url){
+function deleteConfirm(url) {
 	swal({
 		title: "Apakah Anda yakin?",
 		text: "Setelah dihapus, data tidak dapat dikembalikan.",
@@ -6,15 +6,30 @@ function deleteConfirm(url){
 		buttons: true,
 		dangerMode: true,
 	})
-	.then((willDelete) => {
-		if (willDelete) {
-			window.location.href = url;
-		}
-	});
+		.then((willDelete) => {
+			if (willDelete) {
+				window.location.href = url;
+			}
+		});
 }
 
-function loadDatePicker(element){
-	if(element == '.datepicker'){
+function validasiConfirm(url) {
+	swal({
+		title: "Apakah Anda yakin?",
+		text: "Setelah divalidasi, data tidak dapat dikembalikan.",
+		icon: "warning",
+		buttons: true,
+		dangerMode: true,
+	})
+		.then((willDelete) => {
+			if (willDelete) {
+				window.location.href = url;
+			}
+		});
+}
+
+function loadDatePicker(element) {
+	if (element == '.datepicker') {
 		comp = {
 			calendar: true,
 			date: true,
@@ -28,7 +43,7 @@ function loadDatePicker(element){
 			useTwentyfourHour: false
 		}
 		form = 'YYYY-MM-DD'
-	}else{
+	} else {
 		comp = {
 			calendar: true,
 			date: true,
@@ -43,41 +58,41 @@ function loadDatePicker(element){
 		}
 		form = 'YYYY-MM-DD hh:mm'
 	}
-	$(element).each(function(){
-		let d = new tempusDominus.TempusDominus(this, 
-		{
-			display: {
-				icons: {
-					type: 'icons',
-					time: 'fa fa-solid fa-clock',
-					date: 'fa fa-solid fa-calendar-alt',
-					up: 'fa fa-solid fa-arrow-up',
-					down: 'fa fa-solid fa-arrow-down',
-					previous: 'fa fa-solid fa-chevron-left',
-					next: 'fa fa-solid fa-chevron-right',
-					today: 'fa fa-solid fa-dot-circle',
-					clear: 'fa fa-solid fa-trash',
-					close: 'fa fa-solid fa-times'
+	$(element).each(function () {
+		let d = new tempusDominus.TempusDominus(this,
+			{
+				display: {
+					icons: {
+						type: 'icons',
+						time: 'fa fa-solid fa-clock',
+						date: 'fa fa-solid fa-calendar-alt',
+						up: 'fa fa-solid fa-arrow-up',
+						down: 'fa fa-solid fa-arrow-down',
+						previous: 'fa fa-solid fa-chevron-left',
+						next: 'fa fa-solid fa-chevron-right',
+						today: 'fa fa-solid fa-dot-circle',
+						clear: 'fa fa-solid fa-trash',
+						close: 'fa fa-solid fa-times'
+					},
+					sideBySide: false,
+					calendarWeeks: false,
+					viewMode: 'calendar',
+					toolbarPlacement: 'bottom',
+					keepOpen: false,
+					buttons: {
+						today: true,
+						clear: false,
+						close: false
+					},
+					components: comp,
+					inline: false,
+					theme: 'light'
 				},
-				sideBySide: false,
-				calendarWeeks: false,
-				viewMode: 'calendar',
-				toolbarPlacement: 'bottom',
-				keepOpen: false,
-				buttons: {
-					today: true,
-					clear: false,
-					close: false
-				},
-				components: comp,
-				inline: false,
-				theme: 'light'
-			},
-			localization: {
-				today: 'Waktu Sekarang',
-			}
-		
-		});
-		d.dates.formatInput = function(date) { {return moment(date).format(form) } }
+				localization: {
+					today: 'Waktu Sekarang',
+				}
+
+			});
+		d.dates.formatInput = function (date) { { return moment(date).format(form) } }
 	});
 }

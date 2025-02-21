@@ -3,7 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use App\Modules\Kunjungan\Controllers\KunjunganController;
 
-Route::controller(KunjunganController::class)->middleware(['web','auth'])->name('kunjungan.')->group(function(){
+Route::controller(KunjunganController::class)->middleware(['web', 'auth'])->name('kunjungan.')->group(function () {
+	// routing custom
+	Route::get('/kunjungan/validasi/{kunjungan}', 'validasi')->name('validasi.update');
+
+
 	Route::get('/kunjungan', 'index')->name('index');
 	Route::get('/kunjungan/data', 'data')->name('data.index');
 	Route::get('/kunjungan/create', 'create')->name('create');

@@ -19,7 +19,8 @@ class DashboardController extends Controller
 
         // get user's role
         $roles = Permission::getRole($user->id);
-        if($roles->count() == 0) abort(403);
+        if ($roles->count() == 0)
+            abort(403);
         $active_role = $roles->where('id', $id_role)->first()->only(['id', 'role']);
         // dd($active_role);
         // get user's menu
@@ -28,8 +29,8 @@ class DashboardController extends Controller
         // get user's privilege
         $privileges = Permission::getPrivilege($active_role);
         $privileges = $privileges->mapWithKeys(function ($item, $key) {
-                            return [$item['module'] => $item->only(['create', 'read', 'update', 'delete', 'show_menu'])];
-                        });
+            return [$item['module'] => $item->only(['create', 'read', 'update', 'delete', 'show_menu', 'show'])];
+        });
 
         // store to session
         session(['menus' => $menus]);
@@ -37,7 +38,7 @@ class DashboardController extends Controller
         session(['privileges' => $privileges->all()]);
         session(['active_role' => $active_role]);
 
-        return redirect()->route('dashboard')->with('message_success', 'Berhasil memperbarui role/session sebagai '.$active_role['role']);
+        return redirect()->route('dashboard')->with('message_success', 'Berhasil memperbarui role/session sebagai ' . $active_role['role']);
     }
 
     public function forceLogout(Request $request)

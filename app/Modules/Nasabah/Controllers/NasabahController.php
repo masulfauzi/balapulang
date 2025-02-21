@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Modules\Nasabah\Controllers;
 
 use App\Helpers\Logger;
@@ -49,7 +50,7 @@ class NasabahController extends Controller
             'id_unit'      => ['Unit', Form::select("id_unit", $ref_unit, null, ["class" => "form-control select2"])],
             'nip'          => ['Nip', Form::text("nip", old("nip"), ["class" => "form-control", "placeholder" => "", "required" => "required"])],
             'tempat_lahir' => ['Tempat Lahir', Form::text("tempat_lahir", old("tempat_lahir"), ["class" => "form-control", "placeholder" => "", "required" => "required"])],
-            'tgl_lahir'    => ['Tgl Lahir', Form::text("tgl_lahir", old("tgl_lahir"), ["class" => "form-control datepicker", "required" => "required"])],
+            'tgl_lahir'    => ['Tgl Lahir', Form::date("tgl_lahir", old("tgl_lahir"), ["class" => "form-control datepicker", "required" => "required"])],
             'alamat'       => ['Alamat', Form::textarea("alamat", old("alamat"), ["class" => "form-control rich-editor"])],
             'keterangan'   => ['Keterangan', Form::textarea("keterangan", old("keterangan"), ["class" => "form-control rich-editor"])],
 
@@ -172,5 +173,4 @@ class NasabahController extends Controller
         $this->log($request, $text, ['nasabah.id' => $nasabah->id]);
         return back()->with('message_success', 'Nasabah berhasil dihapus!');
     }
-
 }
