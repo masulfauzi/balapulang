@@ -68,7 +68,13 @@
                                         <td>{{ $item->nama_nasabah }}</td>
                                         <td>{!! $item->alamat !!}</td>
                                         <td>{{ $item->cif }}</td>
-                                        <td>{{ $item->bankGaji->nama_bank }}</td>
+                                        <td>
+                                            @if ($item->id_bank_gaji != null)
+                                                {{ $item->bankGaji->nama_bank }}
+                                            @else
+                                                <b>Belum ada data</b>
+                                            @endif
+                                        </td>
                                         <td>{{ $item->unit->nama_unit }}</td>
                                         <td>{!! $item->keterangan !!}</td>
                                         <td>{{ $item->nip }}</td>
