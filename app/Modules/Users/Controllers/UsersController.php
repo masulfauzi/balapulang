@@ -42,12 +42,12 @@ class UsersController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name'      => 'required',
-            'username'  => 'required|unique:users,username',
-            'email'     => 'required|email',
-            'password'  => 'required',
-            'identitas' => 'required|unique:users,identitas',
-            'roles'     => 'required|array',
+            'name'     => 'required',
+            'username' => 'required|unique:users,username',
+            'email'    => 'required|email',
+            'password' => 'required',
+            // 'identitas' => 'required|unique:users,identitas',
+            'roles'    => 'required|array',
         ]);
 
         $users             = new Users();
