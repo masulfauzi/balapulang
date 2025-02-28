@@ -28,7 +28,7 @@ class NasabahController extends Controller
         $query = Nasabah::query();
         if ($request->has('search')) {
             $search = $request->get('search');
-            // $query->where('name', 'like', "%$search%");
+            $query->where('nama_nasabah', 'like', "%$search%");
         }
         $data['data'] = $query->paginate(10)->withQueryString();
 
