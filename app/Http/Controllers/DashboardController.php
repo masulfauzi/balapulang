@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\Permission;
+use App\Modules\Kunjungan\Models\Kunjungan;
+use App\Modules\Nasabah\Models\Nasabah;
+use App\Modules\Users\Models\Users;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -10,7 +13,12 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        return view('dashboard');
+        $data['nasabah'] = Nasabah::all();
+        $data['user'] = Users::all();
+        $data['kunjungan'] = Kunjungan::all();
+        $data['kunjungan_invalid'] = Kunjungan::join('status_kunjungan as s', 'kunjungan.id_status_kunjungan', '=', 's.id')->where('s.status_kunjungan', 'Belum Valid')->get();
+
+        return view('dashboard', $data);
     }
 
     public function changeRole($id_role)

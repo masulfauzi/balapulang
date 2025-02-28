@@ -39,10 +39,16 @@
                                     <p class='fw-bold'>{{ $nasabah->nama_nasabah }}</p>
                                 </div>
                                 <div class='col-lg-2'>
+                                    <p>Nip</p>
+                                </div>
+                                <div class='col-lg-10'>
+                                    <p class='fw-bold'>{{ $nasabah->nip }}</p>
+                                </div>
+                                <div class='col-lg-2'>
                                     <p>Alamat</p>
                                 </div>
                                 <div class='col-lg-10'>
-                                    <p class='fw-bold'>{{ $nasabah->alamat }}</p>
+                                    <p class='fw-bold'>{!! $nasabah->alamat !!}</p>
                                 </div>
                                 <div class='col-lg-2'>
                                     <p>Cif</p>
@@ -54,32 +60,19 @@
                                     <p>Bank Gaji</p>
                                 </div>
                                 <div class='col-lg-10'>
-                                    <p class='fw-bold'>
-                                        @if ($nasabah->id_bank_gaji != null)
-                                            {{ $nasabah->bankGaji->id }}
-                                        @else
-                                            <b>Belum ada data</b>
-                                        @endif
-                                    </p>
+                                    <p class='fw-bold'>{{ $nasabah->bankGaji->nama_bank }}</p>
                                 </div>
                                 <div class='col-lg-2'>
                                     <p>Unit</p>
                                 </div>
                                 <div class='col-lg-10'>
-                                    <p class='fw-bold'>{{ $nasabah->unit->nama_unit }} -
-                                        {{ $nasabah->unit->dinas->nama_dinas }}</p>
+                                    <p class='fw-bold'>{{ $nasabah->unit->nama_unit }}</p>
                                 </div>
                                 <div class='col-lg-2'>
                                     <p>Keterangan</p>
                                 </div>
                                 <div class='col-lg-10'>
-                                    <p class='fw-bold'>{{ $nasabah->keterangan }}</p>
-                                </div>
-                                <div class='col-lg-2'>
-                                    <p>Nip</p>
-                                </div>
-                                <div class='col-lg-10'>
-                                    <p class='fw-bold'>{{ $nasabah->nip }}</p>
+                                    <p class='fw-bold'>{!! $nasabah->keterangan !!}</p>
                                 </div>
                                 <div class='col-lg-2'>
                                     <p>Tempat Lahir</p>
@@ -91,7 +84,7 @@
                                     <p>Tgl Lahir</p>
                                 </div>
                                 <div class='col-lg-10'>
-                                    <p class='fw-bold'>{{ $nasabah->tgl_lahir }}</p>
+                                    <p class='fw-bold'>{{ \App\Helpers\Format::tanggal($nasabah->tgl_lahir) }}</p>
                                 </div>
 
                             </div>

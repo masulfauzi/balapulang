@@ -45,14 +45,14 @@ class NasabahController extends Controller
 
         $data['forms'] = [
             'nama_nasabah' => ['Nama Nasabah', Form::text("nama_nasabah", old("nama_nasabah"), ["class" => "form-control", "placeholder" => "", "required" => "required"])],
-            'cif'          => ['Cif', Form::text("cif", old("cif"), ["class" => "form-control", "placeholder" => "", "required" => "required"])],
+            'cif' => ['Cif', Form::text("cif", old("cif"), ["class" => "form-control", "placeholder" => "", "required" => "required"])],
             'id_bank_gaji' => ['Bank Gaji', Form::select("id_bank_gaji", $ref_bank_gaji, null, ["class" => "form-control select2"])],
-            'id_unit'      => ['Unit', Form::select("id_unit", $ref_unit, null, ["class" => "form-control select2"])],
-            'nip'          => ['Nip', Form::text("nip", old("nip"), ["class" => "form-control", "placeholder" => "", "required" => "required"])],
+            'id_unit' => ['Unit', Form::select("id_unit", $ref_unit, null, ["class" => "form-control select2"])],
+            'nip' => ['Nip', Form::text("nip", old("nip"), ["class" => "form-control", "placeholder" => "", "required" => "required"])],
             'tempat_lahir' => ['Tempat Lahir', Form::text("tempat_lahir", old("tempat_lahir"), ["class" => "form-control", "placeholder" => "", "required" => "required"])],
-            'tgl_lahir'    => ['Tgl Lahir', Form::date("tgl_lahir", old("tgl_lahir"), ["class" => "form-control datepicker", "required" => "required"])],
-            'alamat'       => ['Alamat', Form::textarea("alamat", old("alamat"), ["class" => "form-control rich-editor"])],
-            'keterangan'   => ['Keterangan', Form::textarea("keterangan", old("keterangan"), ["class" => "form-control rich-editor"])],
+            'tgl_lahir' => ['Tgl Lahir', Form::date("tgl_lahir", old("tgl_lahir"), ["class" => "form-control datepicker", "required" => "required"])],
+            'alamat' => ['Alamat', Form::textarea("alamat", old("alamat"), ["class" => "form-control rich-editor"])],
+            'keterangan' => ['Keterangan', Form::textarea("keterangan", old("keterangan"), ["class" => "form-control rich-editor"])],
 
         ];
 
@@ -63,28 +63,28 @@ class NasabahController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'alamat'       => 'required',
-            'cif'          => 'required',
+            'alamat' => 'required',
+            'cif' => 'required',
             'id_bank_gaji' => 'required',
-            'id_unit'      => 'required',
-            'keterangan'   => 'required',
+            'id_unit' => 'required',
+            'keterangan' => 'required',
             'nama_nasabah' => 'required',
-            'nip'          => 'required',
+            'nip' => 'required',
             'tempat_lahir' => 'required',
-            'tgl_lahir'    => 'required',
+            'tgl_lahir' => 'required',
 
         ]);
 
-        $nasabah               = new Nasabah();
-        $nasabah->alamat       = $request->input("alamat");
-        $nasabah->cif          = $request->input("cif");
+        $nasabah = new Nasabah();
+        $nasabah->alamat = $request->input("alamat");
+        $nasabah->cif = $request->input("cif");
         $nasabah->id_bank_gaji = $request->input("id_bank_gaji");
-        $nasabah->id_unit      = $request->input("id_unit");
-        $nasabah->keterangan   = $request->input("keterangan");
+        $nasabah->id_unit = $request->input("id_unit");
+        $nasabah->keterangan = $request->input("keterangan");
         $nasabah->nama_nasabah = $request->input("nama_nasabah");
-        $nasabah->nip          = $request->input("nip");
+        $nasabah->nip = $request->input("nip");
         $nasabah->tempat_lahir = $request->input("tempat_lahir");
-        $nasabah->tgl_lahir    = $request->input("tgl_lahir");
+        $nasabah->tgl_lahir = $request->input("tgl_lahir");
 
         $nasabah->created_by = Auth::id();
         $nasabah->save();
@@ -107,19 +107,26 @@ class NasabahController extends Controller
     {
         $data['nasabah'] = $nasabah;
 
-        $ref_bank_gaji = BankGaji::all()->pluck('created_by', 'id');
-        $ref_unit      = Unit::all()->pluck('created_by', 'id');
+        $ref_bank_gaji = BankGaji::all()->pluck('nama_bank', 'id');
+        $ref_unit = Unit::all()->pluck('nama_unit', 'id');
+
+        $ref_status_kepegawaian = [
+            '' => '-PILIH SALAH SATU-',
+            0 => 'Belum Pensiun',
+            1 => 'Pensiun'
+        ];
 
         $data['forms'] = [
-            'alamat'       => ['Alamat', Form::textarea("alamat", $nasabah->alamat, ["class" => "form-control rich-editor"])],
-            'cif'          => ['Cif', Form::text("cif", $nasabah->cif, ["class" => "form-control", "placeholder" => "", "required" => "required", "id" => "cif"])],
-            'id_bank_gaji' => ['Bank Gaji', Form::select("id_bank_gaji", $ref_bank_gaji, null, ["class" => "form-control select2"])],
-            'id_unit'      => ['Unit', Form::select("id_unit", $ref_unit, null, ["class" => "form-control select2"])],
-            'keterangan'   => ['Keterangan', Form::textarea("keterangan", $nasabah->keterangan, ["class" => "form-control rich-editor"])],
             'nama_nasabah' => ['Nama Nasabah', Form::text("nama_nasabah", $nasabah->nama_nasabah, ["class" => "form-control", "placeholder" => "", "required" => "required", "id" => "nama_nasabah"])],
-            'nip'          => ['Nip', Form::text("nip", $nasabah->nip, ["class" => "form-control", "placeholder" => "", "required" => "required", "id" => "nip"])],
+            'alamat' => ['Alamat', Form::textarea("alamat", $nasabah->alamat, ["class" => "form-control rich-editor"])],
+            'is_pensiun' => ['Status Kepegawaian', Form::select("is_pensiun", $ref_status_kepegawaian, $nasabah->is_pensiun, ["class" => "form-control select2", "required" => "required", "id" => "tgl_lahir"])],
+            'cif' => ['Cif', Form::text("cif", $nasabah->cif, ["class" => "form-control", "placeholder" => "", "required" => "required", "id" => "cif"])],
+            'id_bank_gaji' => ['Bank Gaji', Form::select("id_bank_gaji", $ref_bank_gaji, null, ["class" => "form-control select2"])],
+            'id_unit' => ['Unit', Form::select("id_unit", $ref_unit, null, ["class" => "form-control select2"])],
+            'keterangan' => ['Keterangan', Form::textarea("keterangan", $nasabah->keterangan, ["class" => "form-control rich-editor"])],
+            'nip' => ['Nip', Form::text("nip", $nasabah->nip, ["class" => "form-control", "placeholder" => "", "required" => "required", "id" => "nip"])],
             'tempat_lahir' => ['Tempat Lahir', Form::text("tempat_lahir", $nasabah->tempat_lahir, ["class" => "form-control", "placeholder" => "", "required" => "required", "id" => "tempat_lahir"])],
-            'tgl_lahir'    => ['Tgl Lahir', Form::text("tgl_lahir", $nasabah->tgl_lahir, ["class" => "form-control datepicker", "required" => "required", "id" => "tgl_lahir"])],
+            'tgl_lahir' => ['Tgl Lahir', Form::date("tgl_lahir", $nasabah->tgl_lahir, ["class" => "form-control", "required" => "required", "id" => "tgl_lahir"])],
 
         ];
 
@@ -131,28 +138,30 @@ class NasabahController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'alamat'       => 'required',
-            'cif'          => 'required',
+            'alamat' => 'required',
+            'cif' => 'required',
             'id_bank_gaji' => 'required',
-            'id_unit'      => 'required',
-            'keterangan'   => 'required',
+            'id_unit' => 'required',
+            'keterangan' => 'required',
             'nama_nasabah' => 'required',
-            'nip'          => 'required',
+            'nip' => 'required',
             'tempat_lahir' => 'required',
-            'tgl_lahir'    => 'required',
+            'tgl_lahir' => 'required',
+            'is_pensiun' => 'required',
 
         ]);
 
-        $nasabah               = Nasabah::find($id);
-        $nasabah->alamat       = $request->input("alamat");
-        $nasabah->cif          = $request->input("cif");
+        $nasabah = Nasabah::find($id);
+        $nasabah->alamat = $request->input("alamat");
+        $nasabah->cif = $request->input("cif");
         $nasabah->id_bank_gaji = $request->input("id_bank_gaji");
-        $nasabah->id_unit      = $request->input("id_unit");
-        $nasabah->keterangan   = $request->input("keterangan");
+        $nasabah->id_unit = $request->input("id_unit");
+        $nasabah->keterangan = $request->input("keterangan");
         $nasabah->nama_nasabah = $request->input("nama_nasabah");
-        $nasabah->nip          = $request->input("nip");
+        $nasabah->nip = $request->input("nip");
         $nasabah->tempat_lahir = $request->input("tempat_lahir");
-        $nasabah->tgl_lahir    = $request->input("tgl_lahir");
+        $nasabah->tgl_lahir = $request->input("tgl_lahir");
+        $nasabah->is_pensiun = $request->input("is_pensiun");
 
         $nasabah->updated_by = Auth::id();
         $nasabah->save();
@@ -164,7 +173,7 @@ class NasabahController extends Controller
 
     public function destroy(Request $request, $id)
     {
-        $nasabah             = Nasabah::find($id);
+        $nasabah = Nasabah::find($id);
         $nasabah->deleted_by = Auth::id();
         $nasabah->save();
         $nasabah->delete();
