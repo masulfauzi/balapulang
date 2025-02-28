@@ -138,7 +138,7 @@ class NasabahController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'alamat' => 'required',
+            // 'alamat' => 'required',
             'cif' => 'required',
             // 'id_bank_gaji' => 'required',
             // 'id_unit' => 'required',
