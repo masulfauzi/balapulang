@@ -124,9 +124,9 @@ class NasabahController extends Controller
             'id_bank_gaji' => ['Bank Gaji', Form::select("id_bank_gaji", $ref_bank_gaji, null, ["class" => "form-control select2"])],
             'id_unit' => ['Unit', Form::select("id_unit", $ref_unit, null, ["class" => "form-control select2"])],
             'keterangan' => ['Keterangan', Form::textarea("keterangan", $nasabah->keterangan, ["class" => "form-control rich-editor"])],
-            'nip' => ['Nip', Form::text("nip", $nasabah->nip, ["class" => "form-control", "placeholder" => "", "required" => "required", "id" => "nip"])],
-            'tempat_lahir' => ['Tempat Lahir', Form::text("tempat_lahir", $nasabah->tempat_lahir, ["class" => "form-control", "placeholder" => "", "required" => "required", "id" => "tempat_lahir"])],
-            'tgl_lahir' => ['Tgl Lahir', Form::date("tgl_lahir", $nasabah->tgl_lahir, ["class" => "form-control", "required" => "required", "id" => "tgl_lahir"])],
+            'nip' => ['Nip', Form::text("nip", $nasabah->nip, ["class" => "form-control", "placeholder" => "", "id" => "nip"])],
+            'tempat_lahir' => ['Tempat Lahir', Form::text("tempat_lahir", $nasabah->tempat_lahir, ["class" => "form-control", "placeholder" => "", "id" => "tempat_lahir"])],
+            'tgl_lahir' => ['Tgl Lahir', Form::date("tgl_lahir", $nasabah->tgl_lahir, ["class" => "form-control", "id" => "tgl_lahir"])],
 
         ];
 
@@ -140,13 +140,13 @@ class NasabahController extends Controller
         $this->validate($request, [
             'alamat' => 'required',
             'cif' => 'required',
-            'id_bank_gaji' => 'required',
-            'id_unit' => 'required',
-            'keterangan' => 'required',
+            // 'id_bank_gaji' => 'required',
+            // 'id_unit' => 'required',
+            // 'keterangan' => 'required',
             'nama_nasabah' => 'required',
-            'nip' => 'required',
-            'tempat_lahir' => 'required',
-            'tgl_lahir' => 'required',
+            // 'nip' => 'required',
+            // 'tempat_lahir' => 'required',
+            // 'tgl_lahir' => 'required',
             'is_pensiun' => 'required',
 
         ]);
