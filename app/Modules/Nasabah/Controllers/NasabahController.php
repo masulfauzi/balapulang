@@ -25,10 +25,39 @@ class NasabahController extends Controller
 
     public function index(Request $request)
     {
+        $data['filter'] = [
+            '' => "-PILIH SALAH SATU-",
+            'pensiun' => 'Pensiun',
+            'aktif' => 'Aktif',
+            'pensiun_tahun_ini' => 'Pensiun Tahun Ini',
+            'pensiun_bulan_ini' => 'Pensiun Bulan Ini',
+            'pensiun_bulan_depan' => 'Pensiun Bulan Depan'
+        ];
+        $data['filter_aktif'] = $request->input('filter');
+
+        $thn_pensiun = date("Y") - 60;
+        $bln_pensiun = date("m");
+        $bln_depan = date('m', strtotime('first day of +1 month'));
+
         $query = Nasabah::query();
         if ($request->has('search')) {
             $search = $request->get('search');
             $query->where('nama_nasabah', 'like', "%$search%");
+        }
+        if ($request->has('filter')) {
+            $filter = $request->get('filter');
+
+            if ($filter == 'pensiun') {
+                $query->where('is_pensiun', '1');
+            } else if ($filter == 'aktif') {
+                $query->where('is_pensiun', '0');
+            } else if ($filter == 'pensiun_tahun_ini') {
+                $query->where('tgl_lahir', 'like', "$thn_pensiun%");
+            } else if ($filter == 'pensiun_bulan_ini') {
+                $query->where('tgl_lahir', 'like', "$thn_pensiun-$bln_pensiun-%");
+            } else if ($filter == 'pensiun_bulan_depan') {
+                $query->where('tgl_lahir', 'like', "$thn_pensiun-$bln_depan-%");
+            }
         }
         $data['data'] = $query->paginate(10)->withQueryString();
 

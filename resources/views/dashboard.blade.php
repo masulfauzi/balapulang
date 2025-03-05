@@ -39,6 +39,7 @@
                                     <div class="col-md-8">
                                         <h6 class="text-muted font-semibold">Data Nasabah</h6>
                                         <h6 class="font-extrabold mb-0">{{ count($nasabah) }}</h6>
+                                        <a href="/nasabah" class="stretched-link"></a>
                                     </div>
                                 </div>
                             </div>
@@ -55,8 +56,8 @@
                                     </div>
                                     <div class="col-md-8">
                                         <h6 class="text-muted font-semibold">Nasabah Pensiun</h6>
-                                        <h6 class="font-extrabold mb-0">{{ count($nasabah->where('is_pensiun', '1')) }}
-                                        </h6>
+                                        <h6 class="font-extrabold mb-0">{{ count($nasabah->where('is_pensiun', '1')) }}</h6>
+                                        <a href="/nasabah?filter=pensiun" class="stretched-link"></a>
                                     </div>
                                 </div>
                             </div>
@@ -74,6 +75,7 @@
                                     <div class="col-md-8">
                                         <h6 class="text-muted font-semibold">Nasabah Aktif</h6>
                                         <h6 class="font-extrabold mb-0">{{ count($nasabah->where('is_pensiun', '0')) }}</h6>
+                                        <a href="/nasabah?filter=aktif" class="stretched-link"></a>
                                     </div>
                                 </div>
                             </div>
@@ -94,6 +96,7 @@
                                     <div class="col-md-8">
                                         <h6 class="text-muted font-semibold">Pensiun Tahun Ini</h6>
                                         <h6 class="font-extrabold mb-0">{{ count(value: $pensiun_tahun_ini) }}</h6>
+                                        <a href="/nasabah?filter=pensiun_tahun_ini" class="stretched-link"></a>
                                     </div>
                                 </div>
                             </div>
@@ -110,8 +113,8 @@
                                     </div>
                                     <div class="col-md-8">
                                         <h6 class="text-muted font-semibold">Pensiun Bulan Ini</h6>
-                                        <h6 class="font-extrabold mb-0">{{ count($pensiun_bulan_ini) }}
-                                        </h6>
+                                        <h6 class="font-extrabold mb-0">{{ count($pensiun_bulan_ini) }}</h6>
+                                        <a href="/nasabah?filter=pensiun_bulan_ini" class="stretched-link"></a>
                                     </div>
                                 </div>
                             </div>
@@ -129,6 +132,7 @@
                                     <div class="col-md-8">
                                         <h6 class="text-muted font-semibold">Pensiun Bulan Depan</h6>
                                         <h6 class="font-extrabold mb-0">{{ count($pensiun_bulan_depan) }}</h6>
+                                        <a href="/nasabah?filter=pensiun_bulan_depan" class="stretched-link"></a>
                                     </div>
                                 </div>
                             </div>

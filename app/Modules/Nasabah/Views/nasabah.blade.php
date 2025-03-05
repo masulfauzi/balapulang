@@ -24,6 +24,39 @@
         <section class="section">
             <div class="card">
                 <h6 class="card-header">
+                    Filter Data
+                </h6>
+                <div class="card-body">
+                    @include('include.flash')
+                    <form class="form form-horizontal" action="" method="GET">
+                        <div class="form-body">
+                            <div class="row">
+                                <div class="col-md-3 text-sm-start text-md-end pt-2">
+                                    <label>Filter</label>
+                                </div>
+                                <div class="col-md-9 form-group">
+                                    {{ Form::select('filter', $filter, $filter_aktif, ['class' => 'form-control select2', 'required' => 'required']) }}
+                                    @error('filter')
+                                        <div class="text-danger">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="offset-md-3 ps-2">
+                                <button class="btn btn-primary" type="submit">Simpan</button> &nbsp;
+                                <a href="{{ route('nasabah.index') }}" class="btn btn-secondary">Batal</a>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
+        </section>
+        <section class="section">
+            <div class="card">
+                <h6 class="card-header">
                     Tabel Data {{ $title }}
                 </h6>
                 <div class="card-body">
@@ -31,6 +64,7 @@
                         <div class="col-9">
                             <form action="{{ route('nasabah.index') }}" method="get">
                                 <div class="form-group col-md-3 has-icon-left position-relative">
+                                    <input type="hidden" name="filter" value="{{ $filter_aktif }}">
                                     <input type="text" class="form-control" value="{{ request()->get('search') }}"
                                         name="search" placeholder="Search">
                                     <div class="form-control-icon"><i class="fa fa-search"></i></div>
