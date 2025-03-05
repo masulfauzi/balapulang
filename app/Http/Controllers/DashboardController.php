@@ -17,6 +17,12 @@ class DashboardController extends Controller
         $data['user'] = Users::all();
         $data['kunjungan'] = Kunjungan::all();
         $data['kunjungan_invalid'] = Kunjungan::join('status_kunjungan as s', 'kunjungan.id_status_kunjungan', '=', 's.id')->where('s.status_kunjungan', 'Belum Valid')->get();
+        $thn_pensiun = date("Y") - 60;
+        $bln_pensiun = date("m");
+        $bln_depan = date('m', strtotime('first day of +1 month'));
+        $data['pensiun_tahun_ini'] = Nasabah::where('tgl_lahir', 'like', "$thn_pensiun%")->get();
+        $data['pensiun_bulan_ini'] = Nasabah::where('tgl_lahir', 'like', "$thn_pensiun-$bln_pensiun-%")->get();
+        $data['pensiun_bulan_depan'] = Nasabah::where('tgl_lahir', 'like', "$thn_pensiun-$bln_depan-%")->get();
 
         return view('dashboard', $data);
     }

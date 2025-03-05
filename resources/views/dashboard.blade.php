@@ -27,7 +27,7 @@
         <section class="row">
             <div class="col-12 col-lg-12">
                 <div class="row">
-                    <div class="col-6 col-lg-3 col-md-6">
+                    <div class="col-6 col-lg-4 col-md-6">
                         <div class="card">
                             <div class="card-body px-3 py-4-5">
                                 <div class="row">
@@ -44,7 +44,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-6 col-lg-3 col-md-6">
+                    <div class="col-6 col-lg-4 col-md-6">
                         <div class="card">
                             <div class="card-body px-3 py-4-5">
                                 <div class="row">
@@ -54,14 +54,15 @@
                                         </div>
                                     </div>
                                     <div class="col-md-8">
-                                        <h6 class="text-muted font-semibold">Data User</h6>
-                                        <h6 class="font-extrabold mb-0">{{ count($user) }}</h6>
+                                        <h6 class="text-muted font-semibold">Nasabah Pensiun</h6>
+                                        <h6 class="font-extrabold mb-0">{{ count($nasabah->where('is_pensiun', '1')) }}
+                                        </h6>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-6 col-lg-3 col-md-6">
+                    <div class="col-6 col-lg-4 col-md-6">
                         <div class="card">
                             <div class="card-body px-3 py-4-5">
                                 <div class="row">
@@ -71,36 +72,69 @@
                                         </div>
                                     </div>
                                     <div class="col-md-8">
-                                        <h6 class="text-muted font-semibold">Data Kunjungan</h6>
-                                        <h6 class="font-extrabold mb-0">{{ count($kunjungan) }}</h6>
+                                        <h6 class="text-muted font-semibold">Nasabah Aktif</h6>
+                                        <h6 class="font-extrabold mb-0">{{ count($nasabah->where('is_pensiun', '0')) }}</h6>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-6 col-lg-3 col-md-6">
+
+                </div>
+                <div class="row">
+                    <div class="col-6 col-lg-4 col-md-6">
                         <div class="card">
                             <div class="card-body px-3 py-4-5">
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <div class="stats-icon red">
-                                            <i class="iconly-boldBookmark"></i>
+                                        <div class="stats-icon purple">
+                                            <i class="iconly-boldShow"></i>
                                         </div>
                                     </div>
                                     <div class="col-md-8">
-                                        <h6 class="text-muted font-semibold">Kunjungan Invalid</h6>
-                                        <h6 class="font-extrabold mb-0">
-                                            @if ($kunjungan_invalid)
-                                                0
-                                            @else
-                                                {{ count($kunjungan_invalid) }}
-                                            @endif
+                                        <h6 class="text-muted font-semibold">Pensiun Tahun Ini</h6>
+                                        <h6 class="font-extrabold mb-0">{{ count(value: $pensiun_tahun_ini) }}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-4 col-md-6">
+                        <div class="card">
+                            <div class="card-body px-3 py-4-5">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="stats-icon blue">
+                                            <i class="iconly-boldProfile"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <h6 class="text-muted font-semibold">Pensiun Bulan Ini</h6>
+                                        <h6 class="font-extrabold mb-0">{{ count($pensiun_bulan_ini) }}
                                         </h6>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div class="col-6 col-lg-4 col-md-6">
+                        <div class="card">
+                            <div class="card-body px-3 py-4-5">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="stats-icon green">
+                                            <i class="iconly-boldAdd-User"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <h6 class="text-muted font-semibold">Pensiun Bulan Depan</h6>
+                                        <h6 class="font-extrabold mb-0">{{ count($pensiun_bulan_depan) }}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="row">
                     <div class="col-6">
