@@ -60,7 +60,13 @@
                                     <p>Bank Gaji</p>
                                 </div>
                                 <div class='col-lg-10'>
-                                    <p class='fw-bold'>{{ $nasabah->bankGaji->nama_bank }}</p>
+                                    <p class='fw-bold'>
+                                        @if ($nasabah->id_bank_gaji == null)
+                                            <b>Belum ada data</b>
+                                        @else
+                                            {{ $nasabah->bankGaji->nama_bank }}
+                                        @endif
+                                    </p>
                                 </div>
                                 <div class='col-lg-2'>
                                     <p>Unit</p>
