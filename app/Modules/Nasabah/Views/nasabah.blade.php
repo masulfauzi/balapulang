@@ -117,8 +117,11 @@
 
                                         <td>
                                             {!! button('nasabah.show', '', $item->id) !!}
-                                            {!! button('nasabah.edit', $title, $item->id) !!}
-                                            {!! button('nasabah.destroy', $title, $item->id) !!}
+                                            @if (session()->get('active_role')['role'] == 'Operator')
+                                            @else
+                                                {!! button('nasabah.edit', $title, $item->id) !!}
+                                                {!! button('nasabah.destroy', $title, $item->id) !!}
+                                            @endif
                                         </td>
                                     </tr>
                                 @empty

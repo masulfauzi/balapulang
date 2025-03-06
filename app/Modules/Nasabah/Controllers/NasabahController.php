@@ -25,6 +25,7 @@ class NasabahController extends Controller
 
     public function index(Request $request)
     {
+        // dd(session()->get('active_role')['role']);
         $data['filter'] = [
             '' => "-PILIH SALAH SATU-",
             'pensiun' => 'Pensiun',
