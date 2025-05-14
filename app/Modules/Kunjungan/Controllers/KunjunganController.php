@@ -77,15 +77,15 @@ class KunjunganController extends Controller
 
         $request->foto->move(public_path('uploads/'), $fileName);
 
-        $status_kunjungan = StatusKunjungan::where('kode_kunjungan', '0')->first();
+        // $status_kunjungan = StatusKunjungan::where('kode_kunjungan', '0')->first();
 
-        $kunjungan                      = new Kunjungan();
-        $kunjungan->hasil_kunjungan     = $request->input("hasil_kunjungan");
-        $kunjungan->id_nasabah          = $request->input("id_nasabah");
-        $kunjungan->id_status_kunjungan = $status_kunjungan->id;
-        $kunjungan->foto                = $fileName;
-        $kunjungan->id_user             = Auth::user()->id;
-        $kunjungan->tgl_kunjungan       = $request->input("tgl_kunjungan");
+        $kunjungan                  = new Kunjungan();
+        $kunjungan->hasil_kunjungan = $request->input("hasil_kunjungan");
+        $kunjungan->id_nasabah      = $request->input("id_nasabah");
+        // $kunjungan->id_status_kunjungan = $status_kunjungan->id;
+        $kunjungan->foto          = $fileName;
+        $kunjungan->id_user       = Auth::user()->id;
+        $kunjungan->tgl_kunjungan = $request->input("tgl_kunjungan");
 
         $kunjungan->created_by = Auth::id();
         $kunjungan->save();
@@ -112,6 +112,17 @@ class KunjunganController extends Controller
         $kunjungan->save();
 
         return redirect()->back()->with('message_sukses', 'Kunjungan telah divalidasi');
+
+    }
+
+    public function tolak_validasi(Request $request, Kunjungan $kunjungan)
+    {
+        $status_kunjungan = StatusKunjungan::where('status_kunjungan', 'Tidak Valid')->first();
+
+        $kunjungan->id_status_kunjungan = $status_kunjungan->id;
+        $kunjungan->save();
+
+        return redirect()->back()->with('message_sukses', 'Kunjungan telah ditolak validasi');
 
     }
 

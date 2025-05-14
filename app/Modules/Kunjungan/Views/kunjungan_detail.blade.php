@@ -56,7 +56,13 @@
                                     <p>Status Kunjungan</p>
                                 </div>
                                 <div class='col-lg-10'>
-                                    <p class='fw-bold'>{{ $kunjungan->statusKunjungan->status_kunjungan }}</p>
+                                    <p class='fw-bold'>
+                                        @if ($kunjungan->id_status_kunjungan)
+                                            {{ $kunjungan->statusKunjungan->status_kunjungan }}
+                                        @else
+                                            <b>Belum Divalidasi</b>
+                                        @endif
+                                    </p>
                                 </div>
                                 <div class='col-lg-2'>
                                     <p>Operator</p>
@@ -71,15 +77,21 @@
                                     <p class='fw-bold'>{{ \App\Helpers\Format::tanggal($kunjungan->tgl_kunjungan) }}</p>
                                 </div>
 
-                                @if ($kunjungan->statusKunjungan->status_kunjungan != 'Valid')
-                                    @if (session()->get('active_role')['role'] == 'Supervisor')
-                                        <div class='col-lg-10'>
-                                            <button
-                                                onclick="validasiConfirm('{{ route('kunjungan.validasi.update', $kunjungan->id) }}')"
-                                                class="btn btn-danger">Validasi</button>
-                                        </div>
-                                    @endif
+                                @if ($kunjungan->id_status_kunjungan == NULL)
+                                    <div class='col-lg-10'>
+                                        <button
+                                            onclick="validasiConfirm('{{ route('kunjungan.validasi.update', $kunjungan->id) }}')"
+                                            class="btn btn-success">Validasi</button>
+                                        <button
+                                            onclick="validasiTolak('{{ route('kunjungan.tolak_validasi.update', $kunjungan->id) }}')"
+                                            class="btn btn-danger">Tolak Validasi</button>
+                                    </div>
                                 @endif
+
+                                {{-- @if ($kunjungan->statusKunjungan->status_kunjungan != 'Valid')
+                                @if (session()->get('active_role')['role'] == 'Supervisor')
+                                @endif
+                                @endif --}}
 
 
 

@@ -63,7 +63,13 @@
                                         <td>{{ $no++ }}</td>
                                         <td>{{ $item->nasabah->nama_nasabah }}</td>
                                         <td>{!! $item->hasil_kunjungan !!}</td>
-                                        <td>{{ $item->statusKunjungan->status_kunjungan }}</td>
+                                        <td>
+                                            @if ($item->id_statuskunjungan)
+                                                {{ $item->statusKunjungan->status_kunjungan }}
+                                            @else
+                                                <b>Belum Divalidasi</b>
+                                            @endif
+                                        </td>
                                         <td>{{ $item->user->name }}</td>
                                         <td>{{ \App\Helpers\Format::tanggal($item->tgl_kunjungan) }}</td>
 

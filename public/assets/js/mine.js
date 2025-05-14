@@ -28,6 +28,21 @@ function validasiConfirm(url) {
 		});
 }
 
+function validasiTolak(url) {
+	swal({
+		title: "Apakah Anda yakin?",
+		text: "Setelah ditolak Validasi, data tidak dapat dikembalikan.",
+		icon: "warning",
+		buttons: true,
+		dangerMode: true,
+	})
+		.then((willDelete) => {
+			if (willDelete) {
+				window.location.href = url;
+			}
+		});
+}
+
 function loadDatePicker(element) {
 	if (element == '.datepicker') {
 		comp = {
