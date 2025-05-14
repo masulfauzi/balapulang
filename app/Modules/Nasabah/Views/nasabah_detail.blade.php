@@ -92,6 +92,15 @@
                                 <div class='col-lg-10'>
                                     <p class='fw-bold'>{{ \App\Helpers\Format::tanggal($nasabah->tgl_lahir) }}</p>
                                 </div>
+                                <div class='col-lg-2'>
+                                    <p>Aksi</p>
+                                </div>
+                                <div class='col-lg-10'>
+                                    <p class='fw-bold'><a
+                                            href="{{ route('kunjungan.create', ['id_nasabah' => $nasabah->id]) }}"
+                                            class="btn btn-primary">Tambah
+                                            Kunjungan</a></p>
+                                </div>
 
                             </div>
                         </div>

@@ -42,8 +42,14 @@ class KunjunganController extends Controller
         // $ref_status_kunjungan = StatusKunjungan::all()->pluck('created_by', 'id');
         // $ref_nasabah          = Nasabah::all()->pluck('cif', 'id');
 
+        if ($request->id_nasabah == null) {
+            $id_nasabah = '';
+        } else {
+            $id_nasabah = $request->id_nasabah;
+        }
+
         $data['forms'] = [
-            'id_nasabah'      => ['Nasabah', Form::select("id_nasabah", $ref_nasabah, null, ["class" => "form-control select2"])],
+            'id_nasabah'      => ['Nasabah', Form::select("id_nasabah", $ref_nasabah, $id_nasabah, ["class" => "form-control select2"])],
             'hasil_kunjungan' => ['Hasil Kunjungan', Form::textarea("hasil_kunjungan", old("hasil_kunjungan"), ["class" => "form-control rich-editor"])],
             'foto'            => ['Foto', Form::file("foto", ["class" => "form-control", "accept" => "capture=camera,image/*"])],
             // 'id_user'         => ['User', Form::select("id_user", $ref_nasabah, null, ["class" => "form-control select2"])],
