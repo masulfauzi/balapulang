@@ -72,11 +72,13 @@
                                 </div>
 
                                 @if ($kunjungan->statusKunjungan->status_kunjungan != 'Valid')
-                                    <div class='col-lg-10'>
-                                        <button
-                                            onclick="validasiConfirm('{{ route('kunjungan.validasi.update', $kunjungan->id) }}')"
-                                            class="btn btn-danger">Validasi</button>
-                                    </div>
+                                    @if (session()->get('active_role')['role'] == 'Supervisor')
+                                        <div class='col-lg-10'>
+                                            <button
+                                                onclick="validasiConfirm('{{ route('kunjungan.validasi.update', $kunjungan->id) }}')"
+                                                class="btn btn-danger">Validasi</button>
+                                        </div>
+                                    @endif
                                 @endif
 
 
