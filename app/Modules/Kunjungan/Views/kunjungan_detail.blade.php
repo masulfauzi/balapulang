@@ -46,6 +46,13 @@
                                     <p class='fw-bold'>{!! $kunjungan->hasil_kunjungan !!}</p>
                                 </div>
                                 <div class='col-lg-2'>
+                                    <p>Foto</p>
+                                </div>
+                                <div class='col-lg-10'>
+                                    <p class='fw-bold'><img width="100%" src="{{ url('uploads/' . $kunjungan->foto) }}"
+                                            alt=""></p>
+                                </div>
+                                <div class='col-lg-2'>
                                     <p>Status Kunjungan</p>
                                 </div>
                                 <div class='col-lg-10'>
