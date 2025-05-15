@@ -49,7 +49,7 @@
                                     <p>Foto</p>
                                 </div>
                                 <div class='col-lg-10'>
-                                    <p class='fw-bold'><img width="100%" src="{{ url('uploads/' . $kunjungan->foto) }}"
+                                    <p class='fw-bold'><img width="50%" src="{{ url('uploads/' . $kunjungan->foto) }}"
                                             alt=""></p>
                                 </div>
                                 <div class='col-lg-2'>
