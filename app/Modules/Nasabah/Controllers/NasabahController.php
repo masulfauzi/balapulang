@@ -74,7 +74,7 @@ class NasabahController extends Controller
                 $query->where('tgl_lahir', 'like', "$thn_pensiun-$bln_depan-%");
             } else if ($filter == 'belum_dikunjungi') {
                 $id_nasabah = Kunjungan::groupBy('id_nasabah')->pluck('id_nasabah')->all();
-                $query->whereNotIn('id', $id_nasabah);
+                $query->whereNotIn('nasabah.id', $id_nasabah);
                 // dd($query);
             }
             // else {
