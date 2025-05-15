@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -20,6 +19,8 @@ return new class extends Migration
             $table->string('nama_nasabah');
             $table->uuid('id_unit');
             $table->foreign('id_unit')->references('id')->on('unit')->onDelete('restrict')->onUpdate('cascade');
+            $table->uuid('id_jabatan');
+            $table->foreign('id_jabatan')->references('id')->on('jabatan')->onDelete('restrict')->onUpdate('cascade');
             $table->string('nip');
             $table->string('cif');
             $table->uuid('id_bank_gaji');
