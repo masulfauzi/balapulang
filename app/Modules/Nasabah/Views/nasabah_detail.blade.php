@@ -51,10 +51,10 @@
                                     <p class='fw-bold'>{!! $nasabah->alamat !!}</p>
                                 </div>
                                 <div class='col-lg-2'>
-                                    <p>Cif</p>
+                                    <p>Status</p>
                                 </div>
                                 <div class='col-lg-10'>
-                                    <p class='fw-bold'>{{ $nasabah->cif }}</p>
+                                    <p class='fw-bold'>{{ $nasabah->status }}</p>
                                 </div>
                                 <div class='col-lg-2'>
                                     <p>Bank Gaji</p>
