@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Helpers\Permission;
@@ -13,16 +12,20 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $data['nasabah'] = Nasabah::all();
-        $data['user'] = Users::all();
-        $data['kunjungan'] = Kunjungan::all();
-        $data['kunjungan_invalid'] = Kunjungan::join('status_kunjungan as s', 'kunjungan.id_status_kunjungan', '=', 's.id')->where('s.status_kunjungan', 'Belum Valid')->get();
-        $thn_pensiun = date("Y") - 60;
-        $bln_pensiun = date("m");
-        $bln_depan = date('m', strtotime('first day of +1 month'));
-        $data['pensiun_tahun_ini'] = Nasabah::where('tgl_lahir', 'like', "$thn_pensiun%")->get();
-        $data['pensiun_bulan_ini'] = Nasabah::where('tgl_lahir', 'like', "$thn_pensiun-$bln_pensiun-%")->get();
-        $data['pensiun_bulan_depan'] = Nasabah::where('tgl_lahir', 'like', "$thn_pensiun-$bln_depan-%")->get();
+        $data['nasabah']                 = Nasabah::all();
+        $data['user']                    = Users::all();
+        $data['kunjungan']               = Kunjungan::all();
+        $data['kunjungan_invalid']       = Kunjungan::join('status_kunjungan as s', 'kunjungan.id_status_kunjungan', '=', 's.id')->where('s.status_kunjungan', 'Belum Valid')->get();
+        $thn_pensiun                     = date("Y") - 60;
+        $bln_pensiun                     = date("m");
+        $bln_depan                       = date('m', strtotime('first day of +1 month'));
+        $data['pensiun_tahun_ini']       = Nasabah::where('tgl_lahir', 'like', "$thn_pensiun%")->get();
+        $data['pensiun_bulan_ini']       = Nasabah::where('tgl_lahir', 'like', "$thn_pensiun-$bln_pensiun-%")->get();
+        $data['pensiun_bulan_depan']     = Nasabah::where('tgl_lahir', 'like', "$thn_pensiun-$bln_depan-%")->get();
+        $id_nasabah                      = Kunjungan::groupBy('id_nasabah')->pluck('id_nasabah')->all();
+        $data['nasabah_belum_kunjungan'] = Nasabah::whereNotIn('id', $id_nasabah)->get();
+
+        // dd($data['nasabah_belum_kunjungan']);
 
         return view('dashboard', $data);
     }
@@ -33,8 +36,10 @@ class DashboardController extends Controller
 
         // get user's role
         $roles = Permission::getRole($user->id);
-        if ($roles->count() == 0)
+        if ($roles->count() == 0) {
             abort(403);
+        }
+
         $active_role = $roles->where('id', $id_role)->first()->only(['id', 'role']);
         // dd($active_role);
         // get user's menu

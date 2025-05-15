@@ -33,6 +33,7 @@ class NasabahController extends Controller
             'pensiun_tahun_ini'   => 'Pensiun Tahun Ini',
             'pensiun_bulan_ini'   => 'Pensiun Bulan Ini',
             'pensiun_bulan_depan' => 'Pensiun Bulan Depan',
+            'belum_dikunjungi'    => 'Nasabah Belum Dikunjungi',
         ];
         $data['filter_aktif'] = $request->input('filter');
 
@@ -58,8 +59,20 @@ class NasabahController extends Controller
                 $query->where('tgl_lahir', 'like', "$thn_pensiun-$bln_pensiun-%");
             } else if ($filter == 'pensiun_bulan_depan') {
                 $query->where('tgl_lahir', 'like', "$thn_pensiun-$bln_depan-%");
+            } else if ($filter == 'belum_dikunjungi') {
+                $id_nasabah = Kunjungan::groupBy('id_nasabah')->pluck('id_nasabah')->all();
+                $query->whereNotIn('id', $id_nasabah);
+                // dd($query);
             }
+            // else {
+            //     if ($filter == 'belum_dikunjungi') {
+            //         $data['data'] = Nasabah::get_nasabah_blm_kunjungan()->paginate(10)->withQueryString();
+            //     } else {
+            //         $data['data'] = $query->paginate(10)->withQueryString();
+            //     }
+            // }
         }
+
         $data['data'] = $query->paginate(10)->withQueryString();
 
         $this->log($request, 'melihat halaman manajemen data ' . $this->title);
