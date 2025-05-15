@@ -77,20 +77,22 @@
                                     <p class='fw-bold'>{{ \App\Helpers\Format::tanggal($kunjungan->tgl_kunjungan) }}</p>
                                 </div>
 
-                                @if ($kunjungan->id_status_kunjungan == NULL)
-                                    <div class='col-lg-10'>
-                                        <button
-                                            onclick="validasiConfirm('{{ route('kunjungan.validasi.update', $kunjungan->id) }}')"
-                                            class="btn btn-success">Validasi</button>
-                                        <button
-                                            onclick="validasiTolak('{{ route('kunjungan.tolak_validasi.update', $kunjungan->id) }}')"
-                                            class="btn btn-danger">Tolak Validasi</button>
-                                    </div>
+                                @if (session()->get('active_role')['role'] == 'Supervisor')
+                                    @if ($kunjungan->id_status_kunjungan == null)
+                                        <div class='col-lg-10'>
+                                            <button
+                                                onclick="validasiConfirm('{{ route('kunjungan.validasi.update', $kunjungan->id) }}')"
+                                                class="btn btn-success">Validasi</button>
+                                            <button
+                                                onclick="validasiTolak('{{ route('kunjungan.tolak_validasi.update', $kunjungan->id) }}')"
+                                                class="btn btn-danger">Tolak Validasi</button>
+                                        </div>
+                                    @endif
                                 @endif
 
+
                                 {{-- @if ($kunjungan->statusKunjungan->status_kunjungan != 'Valid')
-                                @if (session()->get('active_role')['role'] == 'Supervisor')
-                                @endif
+                                
                                 @endif --}}
 
 
