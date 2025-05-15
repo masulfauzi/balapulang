@@ -83,7 +83,7 @@
                                     <th width="15">No</th>
                                     <td>Nama Nasabah</td>
                                     <td>Alamat</td>
-                                    <td>Cif</td>
+                                    <td>Status</td>
                                     <td>Bank Gaji</td>
                                     <td>Unit</td>
                                     <td>Keterangan</td>
@@ -101,7 +101,7 @@
                                         <td>{{ $no++ }}</td>
                                         <td>{{ $item->nama_nasabah }}</td>
                                         <td>{!! $item->alamat !!}</td>
-                                        <td>{{ $item->cif }}</td>
+                                        <td>{{ $item->status }}</td>
                                         <td>
                                             @if ($item->id_bank_gaji != null)
                                                 {{ $item->bankGaji->nama_bank }}
