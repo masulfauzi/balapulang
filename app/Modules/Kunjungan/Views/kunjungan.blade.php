@@ -64,7 +64,7 @@
                                         <td>{{ $item->nasabah->nama_nasabah }}</td>
                                         <td>{!! $item->hasil_kunjungan !!}</td>
                                         <td>
-                                            @if ($item->id_statuskunjungan)
+                                            @if ($item->id_status_kunjungan)
                                                 {{ $item->statusKunjungan->status_kunjungan }}
                                             @else
                                                 <b>Belum Divalidasi</b>
