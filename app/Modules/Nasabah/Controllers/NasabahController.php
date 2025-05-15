@@ -46,7 +46,7 @@ class NasabahController extends Controller
         $bln_pensiun = date("m");
         $bln_depan = date('m', strtotime('first day of +1 month'));
 
-        $query = Nasabah::query()->join('unit', 'nasabah.id_unit', '=', 'unit.id');
+        $query = Nasabah::select('nasabah.*')->join('unit', 'nasabah.id_unit', '=', 'unit.id');
         if ($request->has('search')) {
             $search = $request->get('search');
             $query->where('nama_nasabah', 'like', "%$search%");
