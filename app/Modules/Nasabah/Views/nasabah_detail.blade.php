@@ -120,9 +120,9 @@
                         <div class="col-9">
                             <form action="{{ route('kunjungan.index') }}" method="get">
                                 <div class="form-group col-md-3 has-icon-left position-relative">
-                                    <input type="text" class="form-control" value="{{ request()->get('search') }}"
+                                    {{-- <input type="text" class="form-control" value="{{ request()->get('search') }}"
                                         name="search" placeholder="Search">
-                                    <div class="form-control-icon"><i class="fa fa-search"></i></div>
+                                    <div class="form-control-icon"><i class="fa fa-search"></i></div> --}}
                                 </div>
                             </form>
                         </div>
