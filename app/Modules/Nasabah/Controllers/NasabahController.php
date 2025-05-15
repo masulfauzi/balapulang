@@ -52,7 +52,7 @@ class NasabahController extends Controller
             $query->where('nama_nasabah', 'like', "%$search%");
         }
 
-        if ($request->has('filter')) {
+        if ($request->has('id_dinas')) {
             $id_dinas = $request->get('id_dinas');
             $query->where('id_dinas', $id_dinas);
         }
