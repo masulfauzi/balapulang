@@ -54,7 +54,9 @@ class NasabahController extends Controller
 
         if ($request->has('id_dinas')) {
             $id_dinas = $request->get('id_dinas');
-            $query->where('id_dinas', $id_dinas);
+            if ($id_dinas != '') {
+                $query->where('id_dinas', $id_dinas);
+            }
         }
 
         if ($request->has('filter')) {
