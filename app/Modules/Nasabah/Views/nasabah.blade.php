@@ -35,7 +35,18 @@
                                     <label>Filter</label>
                                 </div>
                                 <div class="col-md-9 form-group">
-                                    {{ Form::select('filter', $filter, $filter_aktif, ['class' => 'form-control select2', 'required' => 'required']) }}
+                                    {{ Form::select('filter', $filter, $filter_aktif, ['class' => 'form-control select2']) }}
+                                    @error('filter')
+                                        <div class="text-danger">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class="col-md-3 text-sm-start text-md-end pt-2">
+                                    <label>Dinas</label>
+                                </div>
+                                <div class="col-md-9 form-group">
+                                    {{ Form::select('id_dinas', $dinas, $dinas_aktif, ['class' => 'form-control select2']) }}
                                     @error('filter')
                                         <div class="text-danger">
                                             {{ $message }}
